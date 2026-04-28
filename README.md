@@ -3,6 +3,7 @@
 <!-- toc -->
 
 - [Introduction](#introduction)
+- [Requirements](#requirements)
 - [Installation](#installation)
 - [What It Does](#what-it-does)
 - [How This Differs From Nuno's Package](#how-this-differs-from-nunos-package)
@@ -33,6 +34,27 @@ This package was inspired by Nuno Maduro's
 That package showed how useful a small SQLite optimization layer can be for
 Laravel. Laravel Optimal SQLite takes the idea further by handling the lifecycle
 issues around `page_size`, WAL mode, `VACUUM`, and `migrate:fresh`.
+
+<a name="requirements"></a>
+
+## Requirements
+
+Laravel Optimal SQLite requires a Laravel application using a file-backed SQLite
+connection. Runtime connection defaults may be applied to any SQLite connection,
+but file-level settings such as `page_size` and `auto_vacuum` cannot be applied
+to `:memory:` databases.
+
+Laravel package discovery should be enabled so the service provider can register
+automatically. If your application disables package discovery, manually register
+the provider:
+
+```php
+Loadinglucian\LaravelOptimalSqlite\OptimalSqliteServiceProvider::class,
+```
+
+After installing the package, run your normal Laravel migrations. The package
+optimizes empty SQLite database files during `php artisan migrate` and preserves
+those file settings during `php artisan migrate:fresh`.
 
 <a name="installation"></a>
 
