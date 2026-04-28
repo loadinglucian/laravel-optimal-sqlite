@@ -1,0 +1,44 @@
+name: Test
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ["8.3", "8.4", "8.5"]
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.php-version }}
+      cancel-in-progress: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: dom, curl, libxml, mbstring, zip, sqlite3, json
+          coverage: none
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: --no-interaction --no-progress --prefer-dist
+
+      - name: Validate Composer package
+        run: composer validate --strict
+
+      - name: Run lint checks
+        run: composer lint:check
+
+      - name: Run test suite
+        run: composer test
