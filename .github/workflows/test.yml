@@ -21,7 +21,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.5"
+          php-version: "8.3"
           extensions: dom, curl, libxml, mbstring, zip, sqlite3, json
           coverage: none
 
