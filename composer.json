@@ -1,0 +1,69 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "loadinglucian/laravel-optimal-sqlite",
+    "description": "Production-oriented SQLite defaults for Laravel migrations and runtime connections.",
+    "keywords": [
+        "laravel",
+        "sqlite",
+        "database",
+        "optimization",
+        "wal"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lucian Roman",
+            "homepage": "https://github.com/loadinglucian"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/console": "^11.0|^12.0|^13.0",
+        "illuminate/database": "^11.0|^12.0|^13.0",
+        "illuminate/filesystem": "^11.0|^12.0|^13.0",
+        "illuminate/support": "^11.0|^12.0|^13.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "orchestra/testbench": "^9.0|^10.0|^11.0",
+        "pestphp/pest": "^3.0|^4.0",
+        "pestphp/pest-plugin-laravel": "^3.0|^4.0",
+        "phpstan/phpstan": "^1.0|^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Loadinglucian\\LaravelOptimalSqlite\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Loadinglucian\\LaravelOptimalSqlite\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Loadinglucian\\LaravelOptimalSqlite\\OptimalSqliteServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "lint": [
+            "pint",
+            "phpstan analyse --memory-limit=1G"
+        ],
+        "lint:check": [
+            "pint --test",
+            "phpstan analyse --memory-limit=1G"
+        ],
+        "test": "pest"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
